@@ -1,0 +1,118 @@
+#include <iostream>
+using namespace std;
+
+
+int main() {
+
+
+// 1. Leia um inteiro e informe se é par ou ímpar.
+    int n;
+    cout << "Digite um numero inteiro: ";
+    cin >> n;
+
+    if (n % 2 == 0)
+        cout << "O numero e par." << endl;
+    else
+        cout << "O numero e impar." << endl;
+
+
+// 2. Leia notas (double) até que o usuário digite -1. Exiba a média. Valide se houve ao menos uma nota.
+    double nota, soma = 0;
+    int qtd = 0;
+
+    cout << "Digite as notas (-1 para parar):" << endl;
+    while (true) {
+        cin >> nota;
+        if (nota == -1)
+            break;
+        soma += nota;
+        qtd++;
+    }
+
+    if (qtd > 0)
+        cout << "Media das notas: " << soma / qtd << endl;
+    else
+        cout << "Nenhuma nota valida foi digitada." << endl;
+
+
+// 3. Menu com 3 opções: somar, subtrair e sair. Use do while.
+    int opcao;
+    double a, b;
+    do {
+        cout << "\n--- MENU ---\n";
+        cout << "1 - Somar\n";
+        cout << "2 - Subtrair\n";
+        cout << "3 - Sair\n";
+        cout << "Escolha: ";
+        cin >> opcao;
+
+        if (opcao == 1) {
+            cout << "Digite dois numeros: ";
+            cin >> a >> b;
+            cout << "Resultado: " << a + b << endl;
+        } 
+        else if (opcao == 2) {
+            cout << "Digite dois numeros: ";
+            cin >> a >> b;
+            cout << "Resultado: " << a - b << endl;
+        } 
+        else if (opcao != 3) {
+            cout << "Opcao invalida!" << endl;
+        }
+    } while (opcao != 3);
+
+// 4. Leia um número n e imprima a tabuada de 1 a 10.
+    int num;
+    cout << "\nDigite um numero para ver a tabuada: ";
+    cin >> num;
+
+    cout << "Tabuada de " << num << ":\n";
+    for (int i = 1; i <= 10; i++)
+        cout << num << " x " << i << " = " << num * i << endl;
+
+
+// 5. Leia um inteiro (pode ser negativo) e conte quantos dígitos ele possui.
+    long long valor;
+    cout << "\nDigite um numero inteiro (pode ser negativo): ";
+    cin >> valor;
+
+    if (valor < 0)
+        valor *= -1;
+
+    if (valor == 0)
+        cout << "O numero possui 1 digito." << endl;
+    else {
+        int digitos = 0;
+        while (valor > 0) {
+            valor /= 10;
+            digitos++;
+        }
+        cout << "O numero possui " << digitos << " digitos." << endl;
+    }
+
+// 6. Implemente bool ehPrimo(int) e conte quantos primos há no intervalo (a, b).
+    auto ehPrimo = [](int x) -> bool {
+        if (x <= 1) return false;
+        for (int i = 2; i * i <= x; i++) { // sem usar sqrt()
+            if (x % i == 0)
+                return false;
+        }
+        return true;
+    };
+
+    int a_int, b_int;
+    cout << "\nDigite o inicio do intervalo: ";
+    cin >> a_int;
+    cout << "Digite o fim do intervalo: ";
+    cin >> b_int;
+
+    int contPrimos = 0;
+    for (int i = a_int; i <= b_int; i++) {
+        if (ehPrimo(i))
+            contPrimos++;
+    }
+
+    cout << "Quantidade de numeros primos entre " << a_int << " e " << b_int << ": " << contPrimos << endl;
+
+    return 0;
+}
