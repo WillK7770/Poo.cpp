@@ -1,0 +1,70 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+
+    // 1) Leia 5 números inteiros e exiba todos os valores digitados.
+    int numeros1[5];
+    cout << "Digite 5 numeros:\n";
+    for(int i = 0; i < 5; i++) {
+        cin >> numeros1[i];
+    }
+    cout << "Voce digitou: ";
+    for(int i = 0; i < 5; i++) {
+        cout << numeros1[i] << " ";
+    }
+    cout << "\n\n";
+
+    // 2) Leia 10 números inteiros e exiba apenas os números pares.
+    int num2;
+    cout << "Digite 10 numeros:\n";
+    for(int i = 0; i < 10; i++) {
+        cin >> num2;
+        if(num2 % 2 == 0) {
+            cout << num2 << " eh par\n";
+        }
+    }
+    cout << "\n";
+
+    // 3) Leia 4 notas, calcule a média e diga se foi aprovado (>=7) ou reprovado (<7)
+    float notas3[4], soma3 = 0, media3;
+    cout << "Digite 4 notas:\n";
+    for(int i = 0; i < 4; i++) {
+        cin >> notas3[i];
+        soma3 += notas3[i];
+    }
+    media3 = soma3 / 4;
+    cout << "Media = " << media3 << endl;
+    if(media3 >= 7)
+        cout << "Aluno aprovado\n\n";
+    else
+        cout << "Aluno reprovado\n\n";
+
+    // 4) Leia 6 números e mostre o maior e o menor.
+    int num4, maior4, menor4;
+    cout << "Digite 6 numeros:\n";
+    for(int i = 0; i < 6; i++) {
+        cin >> num4;
+        if(i == 0) {
+            maior4 = menor4 = num4;
+        } else {
+            if(num4 > maior4) maior4 = num4;
+            if(num4 < menor4) menor4 = num4;
+        }
+    }
+    cout << "Maior numero: " << maior4 << endl;
+    cout << "Menor numero: " << menor4 << endl << "\n";
+
+    // 5) Leia 8 números e conte quantos são positivos e quantos negativos.
+    int num5, positivos5 = 0, negativos5 = 0;
+    cout << "Digite 8 numeros:\n";
+    for(int i = 0; i < 8; i++) {
+        cin >> num5;
+        if(num5 > 0) positivos5++;
+        else if(num5 < 0) negativos5++;
+    }
+    cout << "Positivos: " << positivos5 << endl;
+    cout << "Negativos: " << negativos5 << endl;
+
+    return 0;
+}
