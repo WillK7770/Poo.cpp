@@ -1,0 +1,184 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Movimentacao {
+public:
+    string tipo;        // ENTRADA ou SAIDA
+    string dataHora;
+    int quantidade;
+    string observacao;
+};
+
+class Produto {
+public:
+    string codigo;
+    string nome;
+    int quantidade;
+    Movimentacao mov[40];
+    int totalMov;
+};
+
+int main() {
+    Produto produtos[50];
+    int totalProdutos = 0;
+    int opcao;
+
+    do {
+        cout << "\n1 - Cadastrar produto\n";
+        cout << "2 - Entrada de estoque\n";
+        cout << "3 - Saida de estoque\n";
+        cout << "4 - Listar produtos\n";
+        cout << "5 - Historico de movimentacoes\n";
+        cout << "0 - Sair\n";
+        cin >> opcao;
+
+        // CADASTRAR PRODUTO
+        if (opcao == 1) {
+            if (totalProdutos >= 50) {
+                cout << "Limite de produtos atingido\n";
+            } else {
+                string codigo;
+                cout << "Codigo: ";
+                cin >> codigo;
+
+                int existe = 0;
+                for (int i = 0; i < totalProdutos; i++) {
+                    if (produtos[i].codigo == codigo) {
+                        existe = 1;
+                    }
+                }
+
+                if (existe == 1) {
+                    cout << "Codigo ja existe\n";
+                } else {
+                    produtos[totalProdutos].codigo = codigo;
+
+                    cout << "Nome: ";
+                    cin.ignore();
+                    getline(cin, produtos[totalProdutos].nome);
+
+                    cout << "Quantidade inicial: ";
+                    cin >> produtos[totalProdutos].quantidade;
+
+                    if (produtos[totalProdutos].quantidade < 0) {
+                        cout << "Quantidade invalida\n";
+                    } else {
+                        produtos[totalProdutos].totalMov = 0;
+                        totalProdutos++;
+                        cout << "Produto cadastrado\n";
+                    }
+                }
+            }
+        }
+
+        // ENTRADA DE ESTOQUE
+        else if (opcao == 2) {
+            string codigo;
+            cout << "Codigo do produto: ";
+            cin >> codigo;
+
+            int pos = -1;
+            for (int i = 0; i < totalProdutos; i++) {
+                if (produtos[i].codigo == codigo) {
+                    pos = i;
+                }
+            }
+
+            if (pos == -1) {
+                cout << "Produto nao encontrado\n";
+            } else {
+                int qtd;
+                cout << "Quantidade de entrada: ";
+                cin >> qtd;
+
+                if (qtd > 0 && produtos[pos].totalMov < 40) {
+                    produtos[pos].quantidade += qtd;
+
+                    produtos[pos].mov[produtos[pos].totalMov].tipo = "ENTRADA";
+                    produtos[pos].mov[produtos[pos].totalMov].dataHora = "Data manual";
+                    produtos[pos].mov[produtos[pos].totalMov].quantidade = qtd;
+                    produtos[pos].mov[produtos[pos].totalMov].observacao = "Entrada";
+
+                    produtos[pos].totalMov++;
+                    cout << "Entrada realizada\n";
+                } else {
+                    cout << "Erro na entrada\n";
+                }
+            }
+        }
+
+        // SAIDA DE ESTOQUE
+        else if (opcao == 3) {
+            string codigo;
+            cout << "Codigo do produto: ";
+            cin >> codigo;
+
+            int pos = -1;
+            for (int i = 0; i < totalProdutos; i++) {
+                if (produtos[i].codigo == codigo) {
+                    pos = i;
+                }
+            }
+
+            if (pos == -1) {
+                cout << "Produto nao encontrado\n";
+            } else {
+                int qtd;
+                cout << "Quantidade de saida: ";
+                cin >> qtd;
+
+                if (qtd > 0 && produtos[pos].quantidade - qtd >= 0 && produtos[pos].totalMov < 40) {
+                    produtos[pos].quantidade -= qtd;
+
+                    produtos[pos].mov[produtos[pos].totalMov].tipo = "SAIDA";
+                    produtos[pos].mov[produtos[pos].totalMov].dataHora = "Data manual";
+                    produtos[pos].mov[produtos[pos].totalMov].quantidade = qtd;
+                    produtos[pos].mov[produtos[pos].totalMov].observacao = "Saida";
+
+                    produtos[pos].totalMov++;
+                    cout << "Saida realizada\n";
+                } else {
+                    cout << "Erro na saida\n";
+                }
+            }
+        }
+
+        // LISTAR PRODUTOS
+        else if (opcao == 4) {
+            for (int i = 0; i < totalProdutos; i++) {
+                cout << produtos[i].codigo << " - "
+                     << produtos[i].nome << " - "
+                     << produtos[i].quantidade << endl;
+            }
+        }
+
+        // HISTORICO DE MOVIMENTACOES
+        else if (opcao == 5) {
+            string codigo;
+            cout << "Codigo do produto: ";
+            cin >> codigo;
+
+            int pos = -1;
+            for (int i = 0; i < totalProdutos; i++) {
+                if (produtos[i].codigo == codigo) {
+                    pos = i;
+                }
+            }
+
+            if (pos == -1) {
+                cout << "Produto nao encontrado\n";
+            } else {
+                for (int i = 0; i < produtos[pos].totalMov; i++) {
+                    cout << produtos[pos].mov[i].tipo << " - "
+                         << produtos[pos].mov[i].quantidade << " - "
+                         << produtos[pos].mov[i].observacao << endl;
+                }
+            }
+        }
+
+    } while (opcao != 0);
+
+    return 0;
+}
